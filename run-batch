@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH -J mutex_inc5M_w5_i20_HeavyContention8_All         # Job name
+#SBATCH -o mutex_inc5M_w5_i20_HeavyContention8_All_out.txt # Name of stdout output file
+#SBATCH -e mutex_inc5M_w5_i20_HeavyContention8_All_err.txt # Name of stderr error file
+#SBATCH -p normal          # Queue (partition) name
+#SBATCH -N 1               # Total # of nodes (must be 1 for serial)
+#SBATCH -n 1               # Total # of mpi tasks (should be 1 for serial)
+#SBATCH -t 24:00:00        # Run time (hh:mm:ss)
+#SBATCH --mail-user=email@utexas.edu
+#SBATCH --mail-type=all    # Send email at begin and end of job
+#SBATCH -A EE-382C-EE-361C-Mult # Allocation name (req'd if you have more than 1)
+
+cd /home1/02623/jcarlosg/git/ReadWriteRegisterMutexes
+printf "Job: Incs: 5M, Warmups: 5, Iterations: 20, Bench: HeavyContention 8, NoContention, Algs: All\n"
+printf "Working directory: $(pwd)\n"
+printf "Start date: $(date)\n"
+./gradlew clean
+./gradlew run --rerun-tasks
+printf "End date: $(date)\n"
